@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = (await getCollection('posts', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="Writing" description="Technical writing on astrophysics, data science, and research.">
+  <h1>Writing</h1>
+
+  {allPosts.length === 0 ? (
+    <p>No posts yet. Check back soon!</p>
+  ) : (
+    <ul class="post-list">
+      {allPosts.map(post => (
+        <li>
+          <a href={`/posts/${post.slug}`}>
+            <h2>{post.data.title}</h2>
+            <p class="description">{post.data.description}</p>
+            <div class="meta">
+              <time datetime={post.data.date.toISOString()}>
+                {new Intl.DateTimeFormat('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                }).format(post.data.date)}
+              </time>
+              {post.data.tags && post.data.tags.length > 0 && (
+                <div class="tags">
+                  {post.data.tags.map(tag => (
+                    <span class="tag">{tag}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )}
+</BaseLayout>
+
+<style>
+  h1 {
+    margin-bottom: var(--space-lg);
+  }
+
+  .post-list {
+    list-style: none;
+    margin-left: 0;
+  }
+
+  .post-list li {
+    margin-bottom: var(--space-xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .post-list li:last-child {
+    border-bottom: none;
+  }
+
+  .post-list a {
+    border-bottom: none;
+    display: block;
+  }
+
+  .post-list a:hover h2 {
+    color: var(--color-accent);
+  }
+
+  .post-list h2 {
+    margin: 0 0 var(--space-sm);
+    transition: color 0.2s ease;
+  }
+
+  .description {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-sm);
+  }
+
+  .meta {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .tags {
+    display: flex;
+    gap: var(--space-xs);
+  }
+
+  .tag {
+    background-color: var(--color-code-bg);
+    padding: 0.2em 0.6em;
+    border-radius: 3px;
+    font-size: 0.85rem;
+  }
+</style>

@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = (await getCollection('projects'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="Projects" description="Technical projects and software development work.">
+  <h1>Projects</h1>
+
+  {allProjects.length === 0 ? (
+    <p>No projects yet. Check back soon!</p>
+  ) : (
+    <ul class="project-list">
+      {allProjects.map(project => (
+        <li>
+          <a href={`/projects/${project.slug}`}>
+            <h2>{project.data.title}</h2>
+            <p class="description">{project.data.description}</p>
+            <div class="meta">
+              <time datetime={project.data.date.toISOString()}>
+                {new Intl.DateTimeFormat('en-US', {
+                  year: 'numeric',
+                  month: 'long'
+                }).format(project.data.date)}
+              </time>
+              {project.data.tags && project.data.tags.length > 0 && (
+                <div class="tags">
+                  {project.data.tags.map(tag => (
+                    <span class="tag">{tag}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )}
+</BaseLayout>
+
+<style>
+  h1 {
+    margin-bottom: var(--space-lg);
+  }
+
+  .project-list {
+    list-style: none;
+    margin-left: 0;
+  }
+
+  .project-list li {
+    margin-bottom: var(--space-xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .project-list li:last-child {
+    border-bottom: none;
+  }
+
+  .project-list a {
+    border-bottom: none;
+    display: block;
+  }
+
+  .project-list a:hover h2 {
+    color: var(--color-accent);
+  }
+
+  .project-list h2 {
+    margin: 0 0 var(--space-sm);
+    transition: color 0.2s ease;
+  }
+
+  .description {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-sm);
+  }
+
+  .meta {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .tags {
+    display: flex;
+    gap: var(--space-xs);
+  }
+
+  .tag {
+    background-color: var(--color-code-bg);
+    padding: 0.2em 0.6em;
+    border-radius: 3px;
+    font-size: 0.85rem;
+  }
+</style>

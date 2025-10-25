@@ -1,0 +1,127 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allResearch = (await getCollection('research'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="Research" description="Publications and research in astrophysics and machine learning.">
+  <h1>Research & Publications</h1>
+
+  {allResearch.length === 0 ? (
+    <p>No publications listed yet. Check back soon!</p>
+  ) : (
+    <ul class="research-list">
+      {allResearch.map(paper => (
+        <li>
+          <div class="paper">
+            <h2>
+              <a href={`/research/${paper.slug}`}>{paper.data.title}</a>
+            </h2>
+            <p class="authors">{paper.data.authors.join(', ')}</p>
+            <p class="description">{paper.data.description}</p>
+            <div class="meta">
+              {paper.data.journal && (
+                <span class="journal">{paper.data.journal}</span>
+              )}
+              <time datetime={paper.data.date.toISOString()}>
+                {new Intl.DateTimeFormat('en-US', {
+                  year: 'numeric',
+                  month: 'long'
+                }).format(paper.data.date)}
+              </time>
+            </div>
+            <div class="links">
+              {paper.data.arxiv && (
+                <a href={paper.data.arxiv} target="_blank" rel="noopener noreferrer">
+                  arXiv
+                </a>
+              )}
+              {paper.data.doi && (
+                <a href={`https://doi.org/${paper.data.doi}`} target="_blank" rel="noopener noreferrer">
+                  DOI
+                </a>
+              )}
+              {paper.data.pdf && (
+                <a href={paper.data.pdf} target="_blank" rel="noopener noreferrer">
+                  PDF
+                </a>
+              )}
+            </div>
+          </div>
+        </li>
+      ))}
+    </ul>
+  )}
+</BaseLayout>
+
+<style>
+  h1 {
+    margin-bottom: var(--space-lg);
+  }
+
+  .research-list {
+    list-style: none;
+    margin-left: 0;
+  }
+
+  .research-list li {
+    margin-bottom: var(--space-xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .research-list li:last-child {
+    border-bottom: none;
+  }
+
+  .paper h2 {
+    margin: 0 0 var(--space-xs);
+    font-size: 1.3rem;
+  }
+
+  .paper h2 a {
+    border-bottom: none;
+  }
+
+  .paper h2 a:hover {
+    color: var(--color-accent);
+  }
+
+  .authors {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .description {
+    margin-bottom: var(--space-sm);
+  }
+
+  .meta {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-sm);
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .journal {
+    font-style: italic;
+  }
+
+  .links {
+    display: flex;
+    gap: var(--space-md);
+  }
+
+  .links a {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+</style>

@@ -1,0 +1,78 @@
+---
+title: "Exoplanet Detection Pipeline"
+description: "A scalable pipeline for detecting exoplanets in Kepler mission light curve data using machine learning."
+date: 2024-11-20
+tags: ["astrophysics", "machine learning", "python"]
+github: "https://github.com/yourusername/exoplanet-detection"
+featured: true
+---
+
+## Overview
+
+This project implements a complete pipeline for detecting exoplanets in stellar light curves from NASA's Kepler mission. The system processes time-series photometric data and uses convolutional neural networks to identify transit signatures characteristic of exoplanets.
+
+## Technical Approach
+
+The pipeline consists of several key components:
+
+### Data Preprocessing
+
+Light curves are normalized and detrended to remove systematic instrumental effects:
+
+```python
+from astropy.io import fits
+import numpy as np
+
+def preprocess_light_curve(flux, time):
+    """
+    Normalize and detrend a light curve.
+
+    Args:
+        flux: Array of flux measurements
+        time: Array of observation times
+
+    Returns:
+        normalized_flux: Preprocessed flux array
+    """
+    # Remove NaN values
+    mask = ~np.isnan(flux)
+    flux, time = flux[mask], time[mask]
+
+    # Normalize by median
+    median_flux = np.median(flux)
+    normalized = flux / median_flux
+
+    # Apply Savitzky-Golay filter for detrending
+    from scipy.signal import savgol_filter
+    window = 49
+    polyorder = 2
+    trend = savgol_filter(normalized, window, polyorder)
+
+    return normalized / trend
+```
+
+### Neural Network Architecture
+
+The model uses a 1D CNN architecture optimized for time-series classification:
+
+- **Input layer**: 2048 time steps of normalized flux
+- **Conv1D layers**: Extract hierarchical temporal features
+- **Global pooling**: Aggregate features across time
+- **Dense layers**: Final classification
+
+Training achieves 97% accuracy on the held-out test set, with precision and recall both exceeding 95%.
+
+## Key Results
+
+- Processed 150,000+ light curves from Kepler data
+- Detected 127 previously uncatalogued transit candidates
+- Average inference time: 15ms per light curve on GPU
+- Successfully identified planets with radii as small as 1.2 Earth radii
+
+## Future Directions
+
+- Extend to TESS mission data
+- Implement period detection for multi-planet systems
+- Deploy as a real-time classification service
+
+The full codebase and trained models are available on GitHub.

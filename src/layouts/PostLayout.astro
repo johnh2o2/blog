@@ -1,0 +1,89 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  tags?: string[];
+}
+
+const { title, description, date, tags } = Astro.props;
+
+const formattedDate = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+}).format(date);
+---
+
+<BaseLayout title={title} description={description}>
+  <article>
+    <header class="post-header">
+      <h1>{title}</h1>
+      <div class="post-meta">
+        <time datetime={date.toISOString()}>{formattedDate}</time>
+        {tags && tags.length > 0 && (
+          <div class="tags">
+            {tags.map(tag => (
+              <span class="tag">{tag}</span>
+            ))}
+          </div>
+        )}
+      </div>
+    </header>
+
+    <div class="post-content">
+      <slot />
+    </div>
+  </article>
+
+  <nav class="post-navigation">
+    <a href="/posts">&larr; Back to all posts</a>
+  </nav>
+</BaseLayout>
+
+<style>
+  .post-header {
+    margin-bottom: var(--space-xl);
+  }
+
+  .post-header h1 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .post-meta {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .tags {
+    display: flex;
+    gap: var(--space-xs);
+  }
+
+  .tag {
+    background-color: var(--color-code-bg);
+    padding: 0.2em 0.6em;
+    border-radius: 3px;
+    font-size: 0.85rem;
+  }
+
+  .post-content {
+    margin-bottom: var(--space-xl);
+  }
+
+  .post-navigation {
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .post-navigation a {
+    font-family: var(--font-sans);
+  }
+</style>

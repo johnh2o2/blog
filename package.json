@@ -1,7 +1,8 @@
 {
-  "name": "helpless-halo",
+  "name": "academic-blog",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "description": "A minimalist academic blog for technical writing, projects, and research",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -9,6 +10,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.15.1"
+    "@astrojs/mdx": "^4.3.8",
+    "astro": "^5.15.1",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0",
+    "shiki": "^3.13.0"
   }
 }

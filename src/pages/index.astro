@@ -1,16 +1,146 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 
+const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+const allProjects = await getCollection('projects');
+const allResearch = await getCollection('research');
+
+const recentPosts = allPosts
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const featuredProjects = allProjects
+  .filter(p => p.data.featured)
+  .slice(0, 2);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Your Name - Astrophysicist & Data Scientist">
+  <section class="hero">
+    <h1>Your Name</h1>
+    <p class="subtitle">
+      PhD in Astrophysics • Data Scientist at FAIR
+    </p>
+    <p class="bio">
+      I work at the intersection of astrophysics, machine learning, and data science.
+      This is where I write about technical topics, share my research, and showcase projects.
+    </p>
+  </section>
+
+  {recentPosts.length > 0 && (
+    <section class="section">
+      <h2>Recent Writing</h2>
+      <ul class="post-list">
+        {recentPosts.map(post => (
+          <li>
+            <a href={`/posts/${post.slug}`}>
+              <h3>{post.data.title}</h3>
+              <p class="description">{post.data.description}</p>
+              <time datetime={post.data.date.toISOString()}>
+                {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long' }).format(post.data.date)}
+              </time>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <a href="/posts" class="view-all">View all posts &rarr;</a>
+    </section>
+  )}
+
+  {featuredProjects.length > 0 && (
+    <section class="section">
+      <h2>Featured Projects</h2>
+      <ul class="project-list">
+        {featuredProjects.map(project => (
+          <li>
+            <a href={`/projects/${project.slug}`}>
+              <h3>{project.data.title}</h3>
+              <p class="description">{project.data.description}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <a href="/projects" class="view-all">View all projects &rarr;</a>
+    </section>
+  )}
+
+  <section class="section">
+    <h2>Research</h2>
+    <p>
+      View my <a href="/research">publications and research</a> in astrophysics and machine learning.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    margin-bottom: var(--space-xl);
+  }
+
+  .hero h1 {
+    margin-top: 0;
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-family: var(--font-sans);
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-md);
+  }
+
+  .bio {
+    font-size: 1.05rem;
+    max-width: 600px;
+  }
+
+  .section {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .section h2 {
+    margin-top: 0;
+  }
+
+  .post-list, .project-list {
+    list-style: none;
+    margin-left: 0;
+  }
+
+  .post-list li, .project-list li {
+    margin-bottom: var(--space-lg);
+  }
+
+  .post-list a, .project-list a {
+    border-bottom: none;
+    display: block;
+  }
+
+  .post-list a:hover h3, .project-list a:hover h3 {
+    color: var(--color-accent);
+  }
+
+  .post-list h3, .project-list h3 {
+    margin: 0 0 var(--space-xs);
+    transition: color 0.2s ease;
+  }
+
+  .description {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-xs);
+  }
+
+  time {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+  }
+
+  .view-all {
+    display: inline-block;
+    margin-top: var(--space-md);
+    font-family: var(--font-sans);
+  }
+</style>

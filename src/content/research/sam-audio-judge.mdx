@@ -1,0 +1,25 @@
+---
+title: "SAM Audio Judge: A Reference-Free Audio Separation Evaluation Metric"
+description: "4th author. Reference-free evaluation metric for audio separation, trained on human annotation data from campaigns I led."
+date: 2026-01-01
+authors: ["Wang", "Chen", "Dunn", "Hoffman", "et al."]
+arxiv: "https://arxiv.org/abs/2601.19702"
+---
+
+import Figure from '../../components/Figure.astro';
+
+## Summary
+
+SAM Audio Judge is a reference-free evaluation metric for audio separation that works across speech, music, and general sounds. Unlike traditional metrics that require access to clean reference signals, SAM Audio Judge predicts human quality judgments directly from the separated audio.
+
+<Figure src="/diagrams/sam-audio-judge.svg" alt="Two rows comparing traditional metrics (requiring separated audio plus clean reference) versus SAM Audio Judge (using only separated audio to produce a quality score without a reference)" caption="SAM Audio Judge eliminates the need for clean reference signals, predicting human quality judgments directly from separated audio." number={1} />
+
+## Connection to SAM Audio
+
+The model was trained on data from the human annotation campaigns that I led for the SAM Audio project. The evaluation protocol I developed — scoring samples independently before providing pairwise preferences — generated the training signal that makes SAM Audio Judge possible.
+
+Combined with SAM Audio Bench, this metric makes audio separation evaluation scalable: other teams can evaluate their systems without spinning up their own human annotation campaigns.
+
+## Links
+
+- [arXiv preprint](https://arxiv.org/abs/2601.19702)

@@ -1,0 +1,93 @@
+---
+title: "cuvarbase"
+description: "GPU-accelerated time-series analysis library for astronomy. Adopted by NASA's TESS pipeline; enabled a Nature-published discovery."
+date: 2018-06-01
+tags: ["CUDA", "Python", "time-series", "GPU", "astronomy"]
+github: "https://github.com/johnh2o2/cuvarbase"
+featured: true
+---
+
+import Figure from '../../components/Figure.astro';
+
+## Overview
+
+**cuvarbase** is a GPU-accelerated Python library for astronomical time-series analysis. It provides fast implementations of standard period-finding algorithms — Lomb-Scargle, Phase Dispersion Minimization, Conditional Entropy, and Box-Least Squares (BLS) — with typical speedups of 1-2 orders of magnitude over CPU-based alternatives.
+
+The library is registered in the [Astrophysics Source Code Library](https://ascl.net/code/25218) (5,787 page views) and has been adopted as production infrastructure by multiple survey teams.
+
+<Figure src="/diagrams/cuvarbase.svg" alt="Diagram showing light curve data fanning out to parallel GPU frequency trials, producing a periodogram with a detected peak, and a comparison bar showing GPU parallel processing is 100x+ faster than CPU sequential" caption="GPU parallelism enables 100x+ speedups by evaluating all trial frequencies simultaneously." number={1} />
+
+## Key Algorithms
+
+The **Lomb-Scargle periodogram** evaluates the power at each angular frequency $\omega$:
+
+$$
+P_{LS}(\omega) = \frac{1}{2}\left[\frac{\left(\sum_j w_j y_j \cos\omega t_j\right)^2}{\sum_j w_j \cos^2\omega t_j} + \frac{\left(\sum_j w_j y_j \sin\omega t_j\right)^2}{\sum_j w_j \sin^2\omega t_j}\right]
+$$
+
+The **Box-Least Squares** statistic searches for periodic box-shaped transit signals:
+
+$$
+\text{SR}(f, T, t_0) = \frac{\left[\sum_{i \in \text{transit}} w_i (y_i - \bar{y})\right]^2}{\sum_{i \in \text{transit}} w_i \left(1 - \sum_{i \in \text{transit}} w_i\right)}
+$$
+
+where $w_i$ are normalized weights, and the search optimizes over frequency $f$, transit duration $T$, and epoch $t_0$.
+
+## Impact
+
+Since its release, cuvarbase has been referenced in **24 papers by other research groups**, with over **550 combined citations** across those papers. These papers span venues including **Nature**, **ApJ**, **MNRAS**, **AJ**, **ApJS**, **A&A**, and **RNAAS**. The adoption trajectory is accelerating: 10 of the 24 papers were published in 2025–2026.
+
+### Discovery-Level Science
+
+The library's GPU-accelerated period search was instrumental in multiple breakthrough discoveries of ultracompact binary white dwarf systems:
+
+- **Burdge et al. (2019, Nature, 150 citations)** — Discovery of **ZTF J1539+5027**, a double white dwarf binary with a 6.91-minute orbital period. So compact the entire binary fits within Saturn's diameter, this system exhibits measurable general-relativistic orbital decay and will be among the first sources detected by the LISA gravitational wave observatory. Press coverage from NOIRLab, Physics Today, ScienceDaily, and a Springer Nature behind-the-paper feature.
+
+- **Burdge et al. (2020, ApJ, 64 citations)** — Discovery of **ZTF J2243+5242**, an 8.8-minute orbital period eclipsing detached double white dwarf binary — the second known eclipsing binary with a sub-10-minute period. Will merge in ~400,000 years.
+
+- **Chickles et al. (2025, ApJ, 6 citations)** — Discovery of **ATLAS J1138-5139**, a 28-minute binary white dwarf system identified as a candidate **Type Ia supernova progenitor** detectable by LISA.
+
+### NASA TESS Pipeline
+
+cuvarbase's BLS implementation was adopted by NASA's **TESS Quick-Look Pipeline (QLP)** for GPU-accelerated transit searches, directly impacting NASA's exoplanet discovery program. The LEO-Vetter paper explicitly cites "the BLS routine implemented in the cuvarbase time series analysis package (Hoffman, 2022)." Starting in TESS Sector 59, the pipeline uses cuvarbase to search an entire sector's worth of light curves in approximately one day.
+
+TESS papers using cuvarbase include:
+
+- **Beleznay & Kunimoto (2022, MNRAS, 52 citations)** — Hot Jupiter occurrence rates across 198,721 AFG dwarf stars in the TESS Prime Mission.
+- **Kunimoto et al. (2025, AJ, 7 citations)** — Search for free-floating planet microlensing events in 7.5 million TESS light curves.
+- **Kunimoto et al. (2025, AJ, 3 citations)** — LEO-Vetter: automated vetting pipeline for ~200,000 M dwarf light curves.
+- **Eschen & Kunimoto (2024, MNRAS, 6 citations)** — Nine new M dwarf planet candidates from TESS Sectors 1–63.
+- **Kunimoto et al. (2023, RNAAS)** — Official QLP data release documenting the switch to GPU-based transit search.
+- **Sha et al. (2026, arXiv)** — Occurrence rate of nearby planetary companions to hot Jupiters using 5 years of TESS data.
+- **Cui et al. (2026, MNRAS)** — Demographics of close-in TESS exoplanets orbiting FGK main-sequence stars.
+
+In total, **9 papers** in the TESS ecosystem rely on cuvarbase for transit searches.
+
+### ZTF Survey Infrastructure
+
+cuvarbase is a core component of the Zwicky Transient Facility's period-finding and source classification pipeline, used to process the survey's billion+ light curves.
+
+### Broader Astronomical Applications
+
+- **Ren et al. (2023, ApJS, 33 citations)** — Systematic search for short-period close white dwarf binary candidates using cuvarbase with Gaia + ZTF data for gravitational wave source identification.
+- **El-Badry et al. (2022, MNRAS, 45 citations)** — Evidence for magnetic braking saturation from the orbital period distribution of low-mass eclipsing binaries in ZTF.
+- **Bódi & Hajdu (2021, ApJS, 21 citations)** — Machine-learned classification of OGLE eclipsing binaries.
+- **Addison et al. (2022, MNRAS, 17 citations)** — Period finding for luminous red nova progenitor searches.
+
+### Successor Tools
+
+cuvarbase's implementations have directly informed subsequent tools in the field:
+- **GCE** (Katz 2021) improved upon cuvarbase's Conditional Entropy memory model
+- **GPFC** (Wang 2024) benchmarked against cuvarbase's BLS implementation
+
+### Community
+
+The project has attracted external contributors, including `astrobatty` who contributed over 20 commits — more than the original author — reflecting genuine community adoption.
+
+## Technical Details
+
+- **Language**: Python with PyCUDA kernels
+- **Algorithms**: Lomb-Scargle, PDM, Conditional Entropy, BLS
+- **Performance**: 100x+ speedups on GPU vs. single-threaded CPU
+- **GitHub**: 41 stars, 7 forks
+- **Design**: Asynchronous GPU operations, batched processing for large datasets

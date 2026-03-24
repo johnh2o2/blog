@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 300">
+  <style>
+    text { font-family: 'Palatino', 'Palatino Linotype', serif; fill: #111; }
+    .sans { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
+    .label { font-size: 12px; fill: #555; }
+    .title { font-size: 14px; font-weight: 600; }
+    .box { fill: #f8f8f2; stroke: #111; stroke-width: 1.5; rx: 4; }
+    .accent { fill: #8b0000; }
+  </style>
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Top row: Traditional approach -->
+  <text x="30" y="30" class="sans title" font-size="13">Traditional Metric</text>
+
+  <!-- Separated audio -->
+  <rect x="30" y="45" width="120" height="45" class="box"/>
+  <text x="90" y="64" text-anchor="middle" class="sans" font-size="11">Separated Audio</text>
+  <polyline points="45,80 55,74 65,82 75,72 85,78 95,73 105,80 115,76 125,80 135,75" fill="none" stroke="#555" stroke-width="1"/>
+
+  <!-- Plus sign -->
+  <text x="170" y="72" text-anchor="middle" class="sans" font-size="18" fill="#555">+</text>
+
+  <!-- Clean reference -->
+  <rect x="195" y="45" width="120" height="45" class="box"/>
+  <text x="255" y="64" text-anchor="middle" class="sans" font-size="11">Clean Reference</text>
+  <polyline points="210,80 220,74 230,82 240,72 250,78 260,73 270,80 280,76 290,80 300,75" fill="none" stroke="#111" stroke-width="1.5"/>
+
+  <!-- Arrow -->
+  <line x1="315" y1="68" x2="370" y2="68" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+
+  <!-- Traditional metric box -->
+  <rect x="375" y="45" width="120" height="45" class="box"/>
+  <text x="435" y="64" text-anchor="middle" class="sans" font-size="11">SI-SNR / SDR</text>
+  <text x="435" y="80" text-anchor="middle" class="label">metric score</text>
+
+  <!-- Requires reference label -->
+  <text x="555" y="62" class="sans accent" font-size="13" font-weight="600">&#x2717;</text>
+  <text x="572" y="62" class="sans label" font-size="12">Requires clean</text>
+  <text x="572" y="78" class="sans label" font-size="12">reference signal</text>
+
+  <!-- Divider -->
+  <line x1="30" y1="120" x2="630" y2="120" stroke="#e0e0e0" stroke-width="1"/>
+
+  <!-- Bottom row: SAM Audio Judge -->
+  <text x="30" y="155" class="sans title" font-size="13">SAM Audio Judge</text>
+
+  <!-- Separated audio only -->
+  <rect x="30" y="170" width="120" height="45" class="box"/>
+  <text x="90" y="189" text-anchor="middle" class="sans" font-size="11">Separated Audio</text>
+  <polyline points="45,205 55,199 65,207 75,197 85,203 95,198 105,205 115,201 125,205 135,200" fill="none" stroke="#555" stroke-width="1"/>
+
+  <!-- No reference needed visual -->
+  <text x="170" y="197" text-anchor="middle" class="sans" font-size="12" fill="#555" font-style="italic">only</text>
+
+  <!-- Arrow -->
+  <line x1="195" y1="193" x2="250" y2="193" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+
+  <!-- SAM Audio Judge -->
+  <rect x="255" y="165" width="170" height="55" rx="6" fill="#f8f8f2" stroke="#111" stroke-width="2"/>
+  <text x="340" y="190" text-anchor="middle" class="sans" font-size="14" font-weight="700">SAM Audio Judge</text>
+  <text x="340" y="207" text-anchor="middle" class="label">Trained on human preferences</text>
+
+  <!-- Arrow -->
+  <line x1="425" y1="193" x2="475" y2="193" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+
+  <!-- Quality score -->
+  <rect x="480" y="170" width="100" height="45" class="box"/>
+  <text x="530" y="189" text-anchor="middle" class="sans" font-size="11" font-weight="600">Quality Score</text>
+  <text x="530" y="206" text-anchor="middle" class="label">human-aligned</text>
+
+  <!-- No reference needed label -->
+  <text x="530" y="245" text-anchor="middle" class="sans" font-size="13" font-weight="600" fill="#111">&#x2713; No reference needed</text>
+
+  <!-- Bottom note -->
+  <text x="330" y="285" text-anchor="middle" class="sans label" font-size="13" font-style="italic">Trained on annotation data from SAM Audio evaluation campaigns</text>
+</svg>

@@ -1,0 +1,39 @@
+---
+title: "SAM Audio Bench"
+description: "First in-the-wild audio separation benchmark with human-labeled multimodal prompts. Created for SAM Audio; enables scalable evaluation with SAM Audio Judge."
+date: 2025-12-01
+tags: ["evaluation", "audio", "benchmarks", "datasets"]
+github: "https://github.com/facebookresearch/sam-audio"
+featured: true
+---
+
+import Figure from '../../components/Figure.astro';
+
+## Overview
+
+**SAM Audio Bench** is the first in-the-wild audio separation benchmark with human-labeled multimodal prompts. I created this benchmark as part of the [SAM Audio](/research/sam-audio) project to enable standardized evaluation of audio separation systems on real-world mixtures.
+
+The benchmark is publicly available on HuggingFace: [facebook/sam-audio-bench](https://huggingface.co/datasets/facebook/sam-audio-bench).
+
+<Figure src="/diagrams/sam-audio-bench.svg" alt="Three-stage evaluation protocol: Stage 1 scores Sample A on a 1-5 scale, Stage 2 scores Sample B on a 1-5 scale, Stage 3 collects A/B preference, with annotation that absolute scoring forces careful listening before comparative judgment" caption="The two-stage protocol collects absolute scores before comparative preference, improving inter-annotator agreement." number={1} />
+
+## Novel Evaluation Protocol
+
+SAM Audio Bench includes a novel evaluation protocol for pairwise audio quality assessment:
+
+1. Annotators score sample A on an absolute scale
+2. Annotators score sample B on an absolute scale
+3. Annotators provide an A/B preference judgment
+
+This two-stage approach — collecting absolute scores before asking for preference — achieves better inter-annotator agreement on pairwise preference than directly asking for comparative judgments (CMOS-style). The absolute scoring phase forces careful listening before the comparative judgment.
+
+## Scalable Evaluation
+
+Combined with [SAM Audio Judge](/research/sam-audio-judge) — a reference-free evaluation metric trained on the human preference data this benchmark generated — SAM Audio Bench enables scalable audio separation evaluation. Other teams can benchmark their systems without running their own human annotation campaigns.
+
+## Links
+
+- [SAM Audio Bench on HuggingFace](https://huggingface.co/datasets/facebook/sam-audio-bench)
+- [GitHub](https://github.com/facebookresearch/sam-audio)
+- [SAM Audio paper](/research/sam-audio)
+- [SAM Audio Judge paper](/research/sam-audio-judge)

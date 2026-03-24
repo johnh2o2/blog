@@ -1,0 +1,20 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+  number?: number;
+  width?: string;
+}
+
+const { src, alt, caption, number, width = '100%' } = Astro.props;
+---
+
+<figure>
+  <img src={src} alt={alt} style={`max-width: ${width};`} />
+  {caption && (
+    <figcaption>
+      {number && <strong>Figure {number}.</strong>} {caption}
+    </figcaption>
+  )}
+</figure>

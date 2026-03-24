@@ -1,0 +1,45 @@
+---
+title: "Fast Template Periodogram"
+description: "Novel O(N log N) algorithm for template periodograms, reducing complexity from O(N^2). Recasts non-linear fitting as polynomial zero-finding via NUFFTs."
+date: 2017-09-01
+tags: ["Python", "algorithms", "time-series", "astronomy"]
+github: "https://github.com/johnh2o2/fast-template-periodogram"
+featured: true
+---
+
+import Figure from '../../components/Figure.astro';
+
+## Overview
+
+The **Fast Template Periodogram** is a novel algorithm that reduces the computational complexity of template periodograms from O(N^2) to O(N log N), making template-based period searches feasible at survey scale.
+
+Traditional template periodograms fit an arbitrary periodic template — not just a sinusoid — at each trial frequency. This is essential for detecting non-sinusoidal signals like eclipsing binaries or RR Lyrae stars, where a sinusoidal model misses most of the signal power. The standard approach requires solving a non-linear least squares problem at every trial frequency: optimizing amplitude, offset, and phase shift. The phase optimization is particularly problematic — the objective has multiple local minima, so gradient-based solvers frequently miss the global optimum.
+
+<Figure src="/diagrams/fast-template-periodogram.svg" alt="Diagram showing the Fast Template Periodogram algorithm: NUFFT computes weighted sums at all frequencies simultaneously, then at each frequency the phase optimization is solved exactly by substituting psi = exp(i*theta) to convert the problem into polynomial zero-finding of degree 6H-1, guaranteeing the global optimum" caption="The FTP algorithm combines NUFFTs for efficient frequency evaluation with polynomial zero-finding for guaranteed globally optimal phase fits." number={1} />
+
+## The Algorithm
+
+The algorithm has two key insights that work together:
+
+**1. NUFFT for all-frequency sums.** The template is represented as a truncated Fourier series with $H$ harmonics. The weighted sums needed for fitting — covariances between the data and the harmonic basis functions — can be expressed as Non-Uniform FFTs and evaluated at all trial frequencies simultaneously in $O(H \cdot N_f \log N_f)$ time.
+
+**2. Polynomial zero-finding for globally optimal phase.** At each trial frequency, amplitude and offset have closed-form solutions given the phase $\theta_2$, reducing the fit to a 1D optimization. The substitution $\psi = e^{i\theta_2}$ converts the trigonometric expressions in $\theta_2$ into polynomials in $\psi$. The optimality condition $dP/d\theta_2 = 0$ becomes a polynomial of degree $6H - 1$:
+
+$$
+2\,\text{MM}(\psi)\,\text{YM}'(\psi) - \text{MM}'(\psi)\,\text{YM}(\psi) = 0
+$$
+
+where $\text{YM}(\psi)$ (degree $2H$) encodes the data–template covariance and $\text{MM}(\psi)$ (degree $4H$) encodes the template self-covariance. Finding *all* roots of this polynomial and evaluating the periodogram power at each one **guarantees the global optimum** — every critical point is enumerated, so no local minimum can be missed.
+
+This combination makes template-based period searches feasible for surveys like ZTF and LSST with millions of light curves.
+
+## Publication
+
+Available as an arXiv preprint:
+
+> Hoffman, Ofek, Zackay, "A Fast Template Periodogram," arXiv:1709.09716
+
+## Links
+
+- [GitHub repository](https://github.com/johnh2o2/fast-template-periodogram) (53 stars)
+- [arXiv preprint](https://arxiv.org/abs/1709.09716)

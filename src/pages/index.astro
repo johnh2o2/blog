@@ -2,145 +2,156 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
-const allPosts = await getCollection('posts', ({ data }) => !data.draft);
-const allProjects = await getCollection('projects');
-const allResearch = await getCollection('research');
-
-const recentPosts = allPosts
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 3);
-
-const featuredProjects = allProjects
+const featuredProjects = (await getCollection('projects'))
   .filter(p => p.data.featured)
-  .slice(0, 2);
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 4);
+
+const allResearch = (await getCollection('research'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 7);
 ---
 
-<BaseLayout title="Your Name - Astrophysicist & Data Scientist">
+<BaseLayout title="John Hoffman — Data Scientist & Researcher">
   <section class="hero">
-    <h1>Your Name</h1>
-    <p class="subtitle">
-      PhD in Astrophysics • Data Scientist at FAIR
-    </p>
-    <p class="bio">
-      I work at the intersection of astrophysics, machine learning, and data science.
-      This is where I write about technical topics, share my research, and showcase projects.
-    </p>
+    <img src="/profile.jpg" alt="John Hoffman" class="profile-photo" />
+    <h1>John Hoffman</h1>
+    <p class="subtitle">Staff Data Scientist, FAIR (Meta)</p>
   </section>
 
-  {recentPosts.length > 0 && (
+  <section class="about">
+    <p>
+      I'm a staff data scientist at Meta's Fundamental AI Research lab, where I build and evaluate
+      large-scale AI systems. I co-led evaluation for
+      <a href="https://arxiv.org/abs/2410.13720" target="_blank" rel="noopener noreferrer">Movie Gen</a> and was third author on
+      <a href="https://arxiv.org/abs/2512.07768" target="_blank" rel="noopener noreferrer">SAM Audio</a>, leading all human evaluations.
+      Two of the projects I've worked on — <a href="https://arxiv.org/abs/2308.11596" target="_blank" rel="noopener noreferrer">SeamlessM4T</a>
+      and <a href="https://arxiv.org/abs/2207.04672" target="_blank" rel="noopener noreferrer">NLLB</a> — were published in Nature.
+    </p>
+    <p>
+      Before FAIR, I earned a PhD in astrophysics from Princeton, where I developed
+      GPU-accelerated methods for astronomical time-series analysis. My thesis library,
+      <a href="https://github.com/johnh2o2/cuvarbase" target="_blank" rel="noopener noreferrer">cuvarbase</a>, was adopted by NASA's TESS pipeline
+      and enabled a Nature-published discovery of ultracompact binary stars.
+      I also worked in ML consulting and ad-tech before joining Meta.
+    </p>
+    <div class="links">
+      <a href="https://github.com/johnh2o2" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://scholar.google.com/citations?user=XhFj1WIAAAAJ" target="_blank" rel="noopener noreferrer">Google Scholar</a>
+      <a href="https://www.linkedin.com/in/johnh2o2/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </div>
+  </section>
+
+  {allResearch.length > 0 && (
     <section class="section">
-      <h2>Recent Writing</h2>
-      <ul class="post-list">
-        {recentPosts.map(post => (
+      <h2>Selected Publications</h2>
+      <ul class="pub-list">
+        {allResearch.map(paper => (
           <li>
-            <a href={`/posts/${post.slug}`}>
-              <h3>{post.data.title}</h3>
-              <p class="description">{post.data.description}</p>
-              <time datetime={post.data.date.toISOString()}>
-                {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long' }).format(post.data.date)}
-              </time>
-            </a>
+            <a href={paper.data.arxiv || (paper.data.doi ? `https://doi.org/${paper.data.doi}` : '#')} target="_blank" rel="noopener noreferrer">{paper.data.title}</a>
+            <span class="meta">
+              {paper.data.journal && <em>{paper.data.journal}</em>}
+              {paper.data.journal && ", "}
+              {new Intl.DateTimeFormat('en-US', { year: 'numeric' }).format(paper.data.date)}
+            </span>
           </li>
         ))}
       </ul>
-      <a href="/posts" class="view-all">View all posts &rarr;</a>
+      <a href="/research" class="view-all">All publications &rarr;</a>
     </section>
   )}
 
   {featuredProjects.length > 0 && (
     <section class="section">
       <h2>Featured Projects</h2>
-      <ul class="project-list">
+      <ul class="proj-list">
         {featuredProjects.map(project => (
           <li>
-            <a href={`/projects/${project.slug}`}>
-              <h3>{project.data.title}</h3>
-              <p class="description">{project.data.description}</p>
-            </a>
+            <a href={project.data.github || project.data.link} target="_blank" rel="noopener noreferrer">{project.data.title}</a>
+            <span class="meta">{project.data.description}</span>
           </li>
         ))}
       </ul>
-      <a href="/projects" class="view-all">View all projects &rarr;</a>
+      <a href="/projects" class="view-all">All projects &rarr;</a>
     </section>
   )}
-
-  <section class="section">
-    <h2>Research</h2>
-    <p>
-      View my <a href="/research">publications and research</a> in astrophysics and machine learning.
-    </p>
-  </section>
 </BaseLayout>
 
 <style>
   .hero {
-    margin-bottom: var(--space-xl);
+    text-align: center;
+    margin-bottom: var(--space-lg);
+  }
+
+  .profile-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto var(--space-md);
   }
 
   .hero h1 {
-    margin-top: 0;
-    font-size: 2.5rem;
+    margin: 0 0 var(--space-xs);
+    font-size: 2.2rem;
   }
 
   .subtitle {
     font-family: var(--font-sans);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: var(--color-text-secondary);
-    margin-bottom: var(--space-md);
+    margin: 0;
   }
 
-  .bio {
+  .about {
+    margin-bottom: var(--space-xl);
+  }
+
+  .about p {
     font-size: 1.05rem;
-    max-width: 600px;
+  }
+
+  .links {
+    display: flex;
+    gap: var(--space-lg);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
   }
 
   .section {
-    margin-top: var(--space-xl);
-    padding-top: var(--space-xl);
-    border-top: 1px solid var(--color-border);
+    margin-bottom: var(--space-xl);
   }
 
   .section h2 {
     margin-top: 0;
+    margin-bottom: var(--space-md);
   }
 
-  .post-list, .project-list {
+  .pub-list, .proj-list {
     list-style: none;
     margin-left: 0;
   }
 
-  .post-list li, .project-list li {
-    margin-bottom: var(--space-lg);
+  .pub-list li, .proj-list li {
+    margin-bottom: var(--space-sm);
   }
 
-  .post-list a, .project-list a {
-    border-bottom: none;
+  .pub-list li a, .proj-list li a {
+    font-weight: 600;
+  }
+
+  .meta {
     display: block;
-  }
-
-  .post-list a:hover h3, .project-list a:hover h3 {
-    color: var(--color-accent);
-  }
-
-  .post-list h3, .project-list h3 {
-    margin: 0 0 var(--space-xs);
-    transition: color 0.2s ease;
-  }
-
-  .description {
-    color: var(--color-text-secondary);
-    margin-bottom: var(--space-xs);
-  }
-
-  time {
     font-family: var(--font-sans);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: var(--color-text-secondary);
+    margin-top: 2px;
   }
 
   .view-all {
     display: inline-block;
-    margin-top: var(--space-md);
+    margin-top: var(--space-sm);
     font-family: var(--font-sans);
+    font-size: 0.9rem;
   }
 </style>

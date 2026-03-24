@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 460">
+  <style>
+    text { font-family: 'Palatino', 'Palatino Linotype', serif; fill: #111; }
+    .sans { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
+    .label { font-size: 11px; fill: #555; }
+    .title { font-size: 14px; font-weight: 600; }
+    .accent { fill: #8b0000; }
+    .box { fill: #f8f8f2; stroke: #111; stroke-width: 1.5; rx: 4; }
+    .box-accent { fill: none; stroke: #8b0000; stroke-width: 1.5; rx: 4; }
+    .math { font-family: 'Palatino', 'Palatino Linotype', serif; font-style: italic; font-size: 12px; }
+  </style>
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- ============ TOP LEFT: Template fit ============ -->
+  <text x="30" y="24" class="sans title">Template Fit to Eclipsing Binary</text>
+
+  <rect x="30" y="35" width="280" height="120" rx="4" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="170" y="168" text-anchor="middle" class="label">Phase</text>
+  <text x="22" y="95" text-anchor="middle" class="label" transform="rotate(-90, 22, 95)">Flux</text>
+
+  <!-- Data points -->
+  <circle cx="42" cy="62" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="50" cy="58" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="58" cy="68" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="66" cy="95" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="74" cy="120" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="82" cy="130" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="90" cy="118" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="98" cy="90" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="106" cy="65" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="114" cy="55" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="122" cy="52" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="130" cy="58" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="138" cy="50" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="146" cy="56" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="154" cy="60" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="162" cy="72" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="170" cy="85" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="178" cy="90" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="186" cy="82" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="194" cy="68" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="202" cy="55" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="210" cy="48" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="218" cy="52" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="226" cy="50" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="234" cy="55" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="242" cy="48" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="250" cy="52" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="258" cy="56" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="266" cy="60" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="274" cy="55" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="282" cy="63" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="290" cy="68" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="298" cy="62" r="2" fill="#555" opacity="0.5"/>
+
+  <!-- Template fit curve -->
+  <path d="M 42,60 C 50,58 55,60 62,70 C 68,85 72,108 78,122 C 82,130 86,132 90,122 C 96,105 100,85 106,68 C 112,56 118,50 126,50 C 134,50 140,52 148,55 C 155,58 160,65 166,76 C 170,84 174,88 178,88 C 182,88 186,82 192,72 C 196,64 200,56 206,50 C 212,46 220,46 228,48 C 236,50 244,48 252,50 C 260,52 266,55 272,55 C 278,54 284,58 290,62 C 296,64 300,62 302,60" fill="none" stroke="#8b0000" stroke-width="2"/>
+
+  <!-- Legend -->
+  <circle cx="42" cy="142" r="2" fill="#555" opacity="0.5"/>
+  <text x="50" y="146" class="label">data</text>
+  <line x1="80" y1="142" x2="100" y2="142" stroke="#8b0000" stroke-width="2"/>
+  <text x="106" y="146" class="label">template fit</text>
+
+  <!-- ============ TOP RIGHT: Sinusoidal comparison ============ -->
+  <text x="350" y="24" class="sans title">Sinusoidal Fit (Lomb-Scargle)</text>
+
+  <rect x="350" y="35" width="280" height="120" rx="4" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="490" y="168" text-anchor="middle" class="label">Phase</text>
+
+  <!-- Same data points offset -->
+  <circle cx="362" cy="62" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="370" cy="58" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="378" cy="68" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="386" cy="95" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="394" cy="120" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="402" cy="130" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="410" cy="118" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="418" cy="90" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="426" cy="65" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="434" cy="55" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="442" cy="52" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="450" cy="58" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="458" cy="50" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="466" cy="56" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="474" cy="60" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="482" cy="72" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="490" cy="85" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="498" cy="90" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="506" cy="82" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="514" cy="68" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="522" cy="55" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="530" cy="48" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="538" cy="52" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="546" cy="50" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="554" cy="55" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="562" cy="48" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="570" cy="52" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="578" cy="56" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="586" cy="60" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="594" cy="55" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="602" cy="63" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="610" cy="68" r="2" fill="#555" opacity="0.5"/>
+  <circle cx="618" cy="62" r="2" fill="#555" opacity="0.5"/>
+
+  <!-- Sinusoidal fit -->
+  <path d="M 362,72 C 380,48 410,44 440,72 C 470,100 500,104 530,72 C 560,40 590,44 620,72" fill="none" stroke="#555" stroke-width="1.5" stroke-dasharray="5,3"/>
+
+  <!-- Legend -->
+  <line x1="362" y1="142" x2="382" y2="142" stroke="#555" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="388" y="146" class="label">sinusoid — misses eclipse shape</text>
+
+  <!-- ============ DIVIDER ============ -->
+  <line x1="30" y1="185" x2="630" y2="185" stroke="#e0e0e0" stroke-width="1"/>
+
+  <!-- ============ ALGORITHM PIPELINE ============ -->
+  <text x="30" y="212" class="sans title">Fast Template Periodogram Algorithm</text>
+
+  <!-- Step 1: Template -->
+  <rect x="30" y="228" width="110" height="55" class="box"/>
+  <text x="85" y="249" text-anchor="middle" class="sans" font-size="11" font-weight="600">Template</text>
+  <text x="85" y="263" text-anchor="middle" class="label">H Fourier harmonics</text>
+  <text x="85" y="275" text-anchor="middle" class="math" font-size="10">c&#8345;, s&#8345;</text>
+
+  <line x1="140" y1="256" x2="170" y2="256" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+
+  <!-- Step 2: NUFFT -->
+  <rect x="175" y="225" width="140" height="62" class="box"/>
+  <text x="245" y="246" text-anchor="middle" class="sans" font-size="12" font-weight="600">NUFFT</text>
+  <text x="245" y="260" text-anchor="middle" class="label">Weighted sums at</text>
+  <text x="245" y="273" text-anchor="middle" class="label">all frequencies at once</text>
+
+  <line x1="315" y1="256" x2="345" y2="256" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+
+  <!-- Step 3: Polynomial root-finding -->
+  <rect x="350" y="222" width="170" height="68" class="box"/>
+  <text x="435" y="242" text-anchor="middle" class="sans" font-size="11" font-weight="600">Polynomial Zero-Finding</text>
+  <text x="435" y="257" text-anchor="middle" class="label">Substitute ψ = exp(iθ₂)</text>
+  <text x="435" y="271" text-anchor="middle" class="label">Solve degree 6H−1 polynomial</text>
+  <text x="435" y="283" text-anchor="middle" class="label">for all critical points of P(θ₂)</text>
+
+  <line x1="520" y1="256" x2="550" y2="256" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+
+  <!-- Step 4: Global optimum -->
+  <rect x="555" y="228" width="85" height="55" rx="4" fill="none" stroke="#8b0000" stroke-width="1.5"/>
+  <text x="597" y="249" text-anchor="middle" class="sans accent" font-size="11" font-weight="600">Global</text>
+  <text x="597" y="263" text-anchor="middle" class="sans accent" font-size="11" font-weight="600">Optimum</text>
+  <text x="597" y="277" text-anchor="middle" class="label">at each ω</text>
+
+  <!-- ============ DIVIDER ============ -->
+  <line x1="30" y1="310" x2="630" y2="310" stroke="#e0e0e0" stroke-width="1"/>
+
+  <!-- ============ COMPARISON ============ -->
+  <text x="30" y="338" class="sans title" font-size="13">Direct Method</text>
+  <text x="30" y="356" class="label" font-size="12">Non-linear optimizer at each frequency — gets trapped in local minima of phase landscape</text>
+  <text x="30" y="372" class="label" font-size="12">O(N²), no guarantee of global optimum</text>
+
+  <text x="30" y="404" class="sans title accent" font-size="13">FTP Method</text>
+  <text x="30" y="422" class="label" font-size="12">NUFFT evaluates all frequencies in O(H · N&#7525; log N&#7525;), then polynomial roots enumerate every critical point</text>
+  <text x="30" y="438" class="label" font-size="12">Guaranteed global optimum at each frequency — no local minima possible</text>
+</svg>

@@ -1,0 +1,35 @@
+---
+title: "No Language Left Behind: Scaling Human-Centered Machine Translation"
+description: "Helped write the human evaluation section for NLLB, a multilingual translation model supporting 200 languages. 1,500+ citations, published in Nature."
+date: 2024-07-01
+authors: ["NLLB Team", "including John Hoffman"]
+journal: "Nature"
+doi: "10.1038/s41586-024-07335-x"
+arxiv: "https://arxiv.org/abs/2207.04672"
+---
+
+import Figure from '../../components/Figure.astro';
+
+## Summary
+
+No Language Left Behind (NLLB) is a large-scale effort to build a single multilingual translation model that supports 200 languages, with a focus on low-resource languages underserved by existing translation systems.
+
+<Figure src="/diagrams/nllb.svg" alt="Central NLLB-200 box surrounded by language code circles (en, zh, fr, ar, hi, sw, ig, qu, and others) connected by lines, with curved dashed arrows between non-obvious pairs like Swahili-Quechua, and the label 200 languages, 40,000+ directions" caption="NLLB-200 supports direct translation between 200 languages, including low-resource pairs like Swahili-Quechua." number={1} />
+
+## Impact
+
+- **1,500+ citations** since the arXiv posting in 2022
+- Published in **Nature** (June 2024); Nature published an accompanying editorial commentary
+- NLLB-200 models widely adopted on HuggingFace across multiple size variants
+- Community applications built on NLLB, including RTranslator (236-point Show HN)
+- Yann LeCun posted about the work on Threads
+
+## My Contribution
+
+I helped write the human evaluation section of the paper, contributing to the design and documentation of the evaluation framework used to benchmark translation quality across language pairs. This involved large-scale human annotation campaigns and the statistical models used to derive quality estimates from noisy human judgments.
+
+## Key Results
+
+- A single model supporting direct translation between 200 languages (40,000+ directions)
+- Significant quality improvements over prior multilingual models, especially for low-resource language pairs
+- Comprehensive human evaluation across a broad set of languages, establishing benchmarks for future work

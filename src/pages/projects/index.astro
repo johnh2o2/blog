@@ -2,6 +2,12 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
+const diagramMap: Record<string, string> = {
+  'cuvarbase': '/diagrams/cuvarbase.svg',
+  'fast-template-periodogram': '/diagrams/fast-template-periodogram.svg',
+  'sam-audio-bench': '/diagrams/sam-audio-bench.svg',
+};
+
 const allProjects = (await getCollection('projects'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
@@ -15,7 +21,12 @@ const allProjects = (await getCollection('projects'))
     <ul class="project-list">
       {allProjects.map(project => (
         <li>
-          <a href={`/projects/${project.slug}`}>
+          <a href={project.data.github || project.data.link} target="_blank" rel="noopener noreferrer" class="project-card">
+            {diagramMap[project.slug] && (
+              <div class="card-diagram">
+                <img src={diagramMap[project.slug]} alt="" />
+              </div>
+            )}
             <h2>{project.data.title}</h2>
             <p class="description">{project.data.description}</p>
             <div class="meta">
@@ -51,32 +62,48 @@ const allProjects = (await getCollection('projects'))
   }
 
   .project-list li {
-    margin-bottom: var(--space-xl);
-    padding-bottom: var(--space-xl);
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-lg);
     border-bottom: 1px solid var(--color-border);
   }
 
   .project-list li:last-child {
     border-bottom: none;
+    padding-bottom: 0;
   }
 
-  .project-list a {
-    border-bottom: none;
+  .project-card {
+    text-decoration: none;
     display: block;
   }
 
-  .project-list a:hover h2 {
-    color: var(--color-accent);
+  .card-diagram {
+    margin-bottom: var(--space-sm);
+  }
+
+  .card-diagram img {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 12px 16px;
+    background: var(--color-background);
+  }
+
+  .project-card:hover h2 {
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   .project-list h2 {
-    margin: 0 0 var(--space-sm);
+    margin: 0 0 var(--space-xs);
     transition: color 0.2s ease;
   }
 
   .description {
     color: var(--color-text-secondary);
-    margin-bottom: var(--space-sm);
+    margin-bottom: var(--space-xs);
   }
 
   .meta {
@@ -95,9 +122,10 @@ const allProjects = (await getCollection('projects'))
   }
 
   .tag {
-    background-color: var(--color-code-bg);
-    padding: 0.2em 0.6em;
+    border: 1px solid var(--color-border);
+    padding: 0.15em 0.5em;
     border-radius: 3px;
     font-size: 0.85rem;
   }
+
 </style>

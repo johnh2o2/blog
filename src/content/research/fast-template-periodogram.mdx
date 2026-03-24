@@ -1,0 +1,43 @@
+---
+title: "A Fast Template Periodogram"
+description: "A novel O(N log N) algorithm for template periodograms using Non-Uniform FFTs, with guaranteed globally optimal phase fits at every trial frequency."
+date: 2017-09-01
+authors: ["John Hoffman", "Eran Ofek", "Barak Zackay"]
+arxiv: "https://arxiv.org/abs/1709.09716"
+---
+
+import Figure from '../../components/Figure.astro';
+
+## Abstract
+
+Template periodograms extend the Lomb-Scargle periodogram by fitting an arbitrary periodic template — rather than a sinusoid — at each trial frequency. This is critical for detecting non-sinusoidal periodic signals (eclipsing binaries, RR Lyrae, Cepheids) that are poorly characterized by sinusoidal models.
+
+The standard template periodogram requires O(N²) operations and relies on non-linear optimization at each trial frequency. Because the phase landscape has multiple local minima, gradient-based solvers frequently converge to suboptimal solutions. We present a new algorithm that reduces the complexity to **O(N log N)** while **guaranteeing the global optimum** at every trial frequency.
+
+<Figure src="/diagrams/fast-template-periodogram.svg" alt="The Fast Template Periodogram algorithm: template fit example showing eclipsing binary data, followed by the algorithm pipeline from NUFFT through polynomial zero-finding to guaranteed global optimum" caption="Top: a template captures eclipse shapes that sinusoidal models miss. Bottom: the FTP algorithm combines NUFFTs with polynomial zero-finding to guarantee the global optimum at each frequency." number={1} />
+
+## Method
+
+The template periodogram statistic measures the improvement in fit over the mean model:
+
+$$
+P(\omega) = \frac{\chi^2_0 - \chi^2(\omega)}{\chi^2_0}
+$$
+
+For a fixed phase $\theta_2$, amplitude and offset have closed-form solutions, reducing the fit to a 1D optimization over phase. The algorithm proceeds in two stages:
+
+**1. NUFFT for all-frequency sums.** Represent the template as $H$ Fourier harmonics. The weighted data–harmonic covariances needed for fitting can be computed at all trial frequencies simultaneously via Non-Uniform FFTs in $O(H \cdot N_f \log N_f)$ time.
+
+**2. Polynomial zero-finding for optimal phase.** The substitution $\psi = e^{i\theta_2}$ converts the trigonometric optimality condition into a polynomial equation of degree $6H - 1$:
+
+$$
+2\,\text{MM}(\psi)\,\text{YM}'(\psi) - \text{MM}'(\psi)\,\text{YM}(\psi) = 0
+$$
+
+where $\text{YM}$ (degree $2H$) encodes data–template covariance and $\text{MM}$ (degree $4H$) encodes template self-covariance. Finding all roots enumerates every critical point of $P(\theta_2)$, guaranteeing the global maximum — no local minimum can be missed.
+
+This makes template-based period searches feasible for modern time-domain surveys with millions of light curves.
+
+## Impact
+
+The algorithm and its [open-source implementation](https://github.com/johnh2o2/fast-template-periodogram) enable survey-scale searches for non-sinusoidal periodic variables — a capability previously limited to small, targeted studies.

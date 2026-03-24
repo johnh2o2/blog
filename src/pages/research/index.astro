@@ -2,6 +2,15 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
+const diagramMap: Record<string, string> = {
+  'sam-audio': '/diagrams/sam-audio.svg',
+  'sam-audio-judge': '/diagrams/sam-audio-judge.svg',
+  'movie-gen': '/diagrams/movie-gen.svg',
+  'seamless-m4t': '/diagrams/seamless-m4t.svg',
+  'nllb': '/diagrams/nllb.svg',
+  'fast-template-periodogram': '/diagrams/fast-template-periodogram.svg',
+};
+
 const allResearch = (await getCollection('research'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
@@ -15,10 +24,13 @@ const allResearch = (await getCollection('research'))
     <ul class="research-list">
       {allResearch.map(paper => (
         <li>
-          <div class="paper">
-            <h2>
-              <a href={`/research/${paper.slug}`}>{paper.data.title}</a>
-            </h2>
+          <a href={paper.data.arxiv || (paper.data.doi ? `https://doi.org/${paper.data.doi}` : '#')} target="_blank" rel="noopener noreferrer" class="paper-card">
+            {diagramMap[paper.slug] && (
+              <div class="card-diagram">
+                <img src={diagramMap[paper.slug]} alt="" />
+              </div>
+            )}
+            <h2>{paper.data.title}</h2>
             <p class="authors">{paper.data.authors.join(', ')}</p>
             <p class="description">{paper.data.description}</p>
             <div class="meta">
@@ -34,22 +46,13 @@ const allResearch = (await getCollection('research'))
             </div>
             <div class="links">
               {paper.data.arxiv && (
-                <a href={paper.data.arxiv} target="_blank" rel="noopener noreferrer">
-                  arXiv
-                </a>
+                <span class="link-tag">arXiv</span>
               )}
               {paper.data.doi && (
-                <a href={`https://doi.org/${paper.data.doi}`} target="_blank" rel="noopener noreferrer">
-                  DOI
-                </a>
-              )}
-              {paper.data.pdf && (
-                <a href={paper.data.pdf} target="_blank" rel="noopener noreferrer">
-                  PDF
-                </a>
+                <span class="link-tag">DOI</span>
               )}
             </div>
-          </div>
+          </a>
         </li>
       ))}
     </ul>
@@ -67,26 +70,43 @@ const allResearch = (await getCollection('research'))
   }
 
   .research-list li {
-    margin-bottom: var(--space-xl);
-    padding-bottom: var(--space-xl);
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-lg);
     border-bottom: 1px solid var(--color-border);
   }
 
   .research-list li:last-child {
     border-bottom: none;
+    padding-bottom: 0;
   }
 
-  .paper h2 {
+  .paper-card {
+    text-decoration: none;
+    display: block;
+  }
+
+  .card-diagram {
+    margin-bottom: var(--space-sm);
+  }
+
+  .card-diagram img {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 12px 16px;
+    background: var(--color-background);
+  }
+
+  .paper-card:hover h2 {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .paper-card h2 {
     margin: 0 0 var(--space-xs);
     font-size: 1.3rem;
-  }
-
-  .paper h2 a {
-    border-bottom: none;
-  }
-
-  .paper h2 a:hover {
-    color: var(--color-accent);
   }
 
   .authors {
@@ -97,14 +117,15 @@ const allResearch = (await getCollection('research'))
   }
 
   .description {
-    margin-bottom: var(--space-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-xs);
   }
 
   .meta {
     font-family: var(--font-sans);
     font-size: 0.9rem;
     color: var(--color-text-secondary);
-    margin-bottom: var(--space-sm);
+    margin-bottom: var(--space-xs);
     display: flex;
     gap: var(--space-md);
     flex-wrap: wrap;
@@ -116,12 +137,17 @@ const allResearch = (await getCollection('research'))
 
   .links {
     display: flex;
-    gap: var(--space-md);
+    gap: var(--space-xs);
   }
 
-  .links a {
+  .link-tag {
     font-family: var(--font-sans);
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: 500;
+    border: 1px solid var(--color-border);
+    padding: 0.1em 0.5em;
+    border-radius: 3px;
+    color: var(--color-text-secondary);
   }
+
 </style>

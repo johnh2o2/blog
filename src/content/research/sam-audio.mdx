@@ -1,0 +1,51 @@
+---
+title: "SAM Audio: Segment Anything in Audio"
+description: "3rd author. Led all human evaluations, created SAM Audio Bench, developed novel evaluation protocol. Foundation model for general audio separation."
+date: 2025-12-01
+authors: ["SAM Audio Team", "including John Hoffman (3rd author)"]
+arxiv: "https://arxiv.org/abs/2512.07768"
+---
+
+import Figure from '../../components/Figure.astro';
+
+## Summary
+
+SAM Audio is a foundation model for general audio separation that supports three prompting modalities — text, visual, and time-span — enabling users to isolate any sound source from a mixture. The model handles speech, music, and general sounds within a single unified architecture.
+
+<Figure src="/diagrams/sam-audio.svg" alt="Three prompting modalities (text, image, time-span) feeding into the SAM Audio model, which outputs separated audio with the target isolated from the mixture" caption="SAM Audio accepts text, image, or time-span prompts to isolate any sound source from a mixture." number={1} />
+
+## Impact
+
+- 14 authors; John is **3rd author**
+- Open weights released on HuggingFace ([facebook/sam-audio-large](https://huggingface.co/facebook/sam-audio-large))
+- **223 HN points**; Mark Zuckerberg personally posted about it
+- Community tools already building on SAM Audio (AudioGhost, Samantha)
+- 8 citations (released December 2025)
+
+## My Contributions
+
+### Led All Human Evaluations
+
+I led the entire human evaluation effort for SAM Audio, powering all ablation studies and system comparisons reported in the paper.
+
+### Novel Evaluation Protocol
+
+I developed a novel evaluation protocol for pairwise audio quality assessment: annotators first score sample A and sample B independently on absolute scales, then provide an A/B preference judgment. This two-stage approach achieves better inter-annotator agreement on pairwise preference than directly asking for preference (CMOS-style), because the absolute scoring phase forces careful listening before the comparative judgment.
+
+### SAM Audio Bench
+
+I created [SAM Audio Bench](https://huggingface.co/datasets/facebook/sam-audio-bench) (facebook/sam-audio-bench) — the first in-the-wild audio separation benchmark with human-labeled multimodal prompts. This benchmark enables standardized evaluation of audio separation systems on real-world mixtures.
+
+### Wrote the Evaluation Section
+
+I wrote the evaluation section of the paper, documenting the methodology, experimental design, and results.
+
+### Enabling Downstream Work
+
+The annotation data generated through this evaluation protocol directly enabled the **SAM Audio Judge** paper (Wang et al. 2026) — a reference-free evaluation metric for audio separation trained on the human preference data my protocol produced.
+
+## Links
+
+- [arXiv preprint](https://arxiv.org/abs/2512.07768)
+- [SAM Audio Bench on HuggingFace](https://huggingface.co/datasets/facebook/sam-audio-bench)
+- [GitHub](https://github.com/facebookresearch/sam-audio)

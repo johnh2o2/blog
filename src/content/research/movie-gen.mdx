@@ -1,6 +1,6 @@
 ---
 title: "Movie Gen: A Cast of Media Foundation Models"
-description: "Co-led evaluation (~65% ownership) for Movie Gen, Meta's media generation foundation models. 448 citations, 1,100+ HN points."
+description: "Co-led audio evaluation for Movie Gen, Meta's media generation foundation models. 448 citations, 1,100+ HN points."
 date: 2024-10-01
 authors: ["Movie Gen Team", "including John Hoffman"]
 arxiv: "https://arxiv.org/abs/2410.13720"
@@ -12,7 +12,7 @@ import Figure from '../../components/Figure.astro';
 
 Movie Gen is a collection of foundation models for media generation — video, audio, and image — representing Meta's state-of-the-art in generative media. The paper describes a family of models capable of generating and editing high-quality video with synchronized audio from text prompts.
 
-<Figure src="/diagrams/movie-gen.svg" alt="Pipeline showing text prompt flowing into Movie Gen model, producing three output channels (video, audio, image), feeding into a human evaluation box marked with ~65% evaluation ownership" caption="Movie Gen generates video, audio, and images from text prompts. I co-led the human evaluation effort (~65% ownership)." number={1} />
+<Figure src="/diagrams/movie-gen.svg" alt="Pipeline showing text prompt flowing into Movie Gen model, producing audio output feeding into an audio evaluation box" caption="Movie Gen generates video, audio, and images from text prompts. I co-led the audio evaluation effort." number={1} />
 
 ## Impact
 
@@ -25,7 +25,11 @@ Movie Gen is a collection of foundation models for media generation — video, a
 
 ## My Contribution
 
-I co-led the evaluation effort for the project, owning approximately 65% of the evaluation work. This included designing and executing the human evaluation campaigns that benchmarked Movie Gen's output quality against competing systems, across video generation, video editing, and audio generation tasks.
+I co-led the audio evaluation effort, designing and executing human evaluation campaigns that benchmarked Movie Gen Audio's output quality against competing systems. The audio evaluations covered three categories:
+
+- **Audio quality** — overall quality, naturalness, and professionalness
+- **Video alignment** — diegetic sound correctness, synchronization, non-diegetic music mood, and action scoring
+- **Text alignment** — precision and recall of generated audio against text prompts
 
 ## Links
 

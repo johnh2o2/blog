@@ -5,10 +5,10 @@ import { getCollection } from 'astro:content';
 const diagramMap: Record<string, string> = {
   'sam-audio': '/diagrams/sam-audio.svg',
   'sam-audio-judge': '/diagrams/sam-audio-judge.svg',
+  'sam-audio-bench': '/diagrams/sam-audio-bench.svg',
   'movie-gen': '/diagrams/movie-gen.svg',
   'seamless-m4t': '/diagrams/seamless-m4t.svg',
   'nllb': '/diagrams/nllb.svg',
-  'fast-template-periodogram': '/diagrams/fast-template-periodogram.svg',
 };
 
 const allResearch = (await getCollection('research'))

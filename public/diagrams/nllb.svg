@@ -76,12 +76,6 @@
   <line x1="370" y1="318" x2="350" y2="210" stroke="#e0e0e0" stroke-width="1"/>
   <line x1="460" y1="298" x2="380" y2="210" stroke="#e0e0e0" stroke-width="1"/>
 
-  <!-- Curved arrow: sw <-> qu (non-obvious pair) -->
-  <path d="M 85,222 C 60,280 130,310 195,302" fill="none" stroke="#555" stroke-width="1.5" stroke-dasharray="4,3"/>
-
-  <!-- Curved arrow: ig <-> am (non-obvious pair) -->
-  <path d="M 142,270 C 330,300 330,300 518,270" fill="none" stroke="#555" stroke-width="1.5" stroke-dasharray="4,3"/>
-
   <!-- Bottom label -->
   <text x="330" y="375" text-anchor="middle" class="sans" font-size="14" font-weight="600">200 languages, 40,000+ directions</text>
 </svg>

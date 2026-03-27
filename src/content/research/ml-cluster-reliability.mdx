@@ -1,0 +1,22 @@
+---
+title: "Revisiting Reliability in Large-Scale Machine Learning Research Clusters"
+description: "Analysis of dependability challenges across two large GPU clusters processing 4M+ jobs and 150M+ A100 GPU hours, with failure taxonomy, MTTF projections, and metrics for software mitigation effectiveness."
+date: 2025-03-01
+authors: ["Apostolos Kokolis", "Michael Kuchnik", "John Hoffman", "Adithya Kumar", "Parth Malani", "Faye Ma", "Zachary DeVito", "Shubho Sengupta", "Kalyan Saladi", "Carole-Jean Wu"]
+journal: "HPCA 2025"
+arxiv: "https://arxiv.org/abs/2410.21680"
+doi: "10.1109/HPCA64813.2025.00093"
+---
+
+import Figure from '../../components/Figure.astro';
+
+<Figure src="/diagrams/ml-cluster-reliability.svg" alt="Diagram showing a GPU cluster grid with failed nodes marked, feeding into failure analysis that produces MTTF projections and mitigation metrics" caption="We analyze failure patterns across large GPU clusters and model reliability at scale." number={1} />
+
+## Summary
+
+We examine dependability challenges in large-scale ML research infrastructure through an analysis of two large GPU clusters that processed over 4 million jobs and 150 million A100 GPU hours. We find that while large jobs are most vulnerable to failures, smaller jobs make up the majority of affected workloads. We introduce a failure taxonomy, develop models projecting mean time to failure across different GPU scales, and propose metrics to assess the effectiveness of software mitigations.
+
+## Links
+
+- [arXiv preprint](https://arxiv.org/abs/2410.21680)
+- [IEEE](https://www.computer.org/csdl/proceedings-article/hpca/2025/064700b259/25Ko6CXaYRq)

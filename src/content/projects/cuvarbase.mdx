@@ -13,7 +13,7 @@ import Figure from '../../components/Figure.astro';
 
 **cuvarbase** is a GPU-accelerated Python library for astronomical time-series analysis. It provides fast implementations of standard period-finding algorithms — Lomb-Scargle, Phase Dispersion Minimization, Conditional Entropy, and Box-Least Squares (BLS) — with typical speedups of 1-2 orders of magnitude over CPU-based alternatives.
 
-The library is registered in the [Astrophysics Source Code Library](https://ascl.net/code/25218) (5,787 page views) and has been adopted as production infrastructure by multiple survey teams.
+The library is registered in the [Astrophysics Source Code Library](https://ascl.net/2210.030) (5,787 page views) and has been adopted as production infrastructure by multiple survey teams.
 
 <Figure src="/diagrams/cuvarbase.svg" alt="Diagram showing light curve data fanning out to parallel GPU frequency trials, producing a periodogram with a detected peak, and a comparison bar showing GPU parallel processing is 100x+ faster than CPU sequential" caption="GPU parallelism enables 100x+ speedups by evaluating all trial frequencies simultaneously." number={1} />
 

@@ -19,6 +19,8 @@ const { Content } = await post.render();
   description={post.data.description}
   date={post.data.date}
   tags={post.data.tags}
+  canonical={post.data.canonical}
+  image={post.data.image}
 >
   <Content />
 </PostLayout>

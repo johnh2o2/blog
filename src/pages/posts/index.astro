@@ -23,7 +23,8 @@ const allPosts = (await getCollection('posts', ({ data }) => !data.draft))
                 {new Intl.DateTimeFormat('en-US', {
                   year: 'numeric',
                   month: 'long',
-                  day: 'numeric'
+                  day: 'numeric',
+                  timeZone: 'UTC'
                 }).format(post.data.date)}
               </time>
               {post.data.tags && post.data.tags.length > 0 && (

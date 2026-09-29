@@ -1,0 +1,90 @@
+---
+title: "Inside the Cosmic Web"
+description: "A 360° film through 13.8 billion years of simulated cosmic history, with a meditative score, optional narration, and room to look around."
+date: 2026-09-29
+tags: ["cosmology", "visualization", "vr"]
+draft: false
+canonical: "https://johnhoffman.io/posts/inside-the-cosmic-web"
+image: "https://johnhoffman.io/figures/inside-the-cosmic-web/cosmic-web.jpg"
+---
+
+import Figure from '../../components/Figure.astro';
+import FilmWatchLink from '../../components/FilmWatchLink.astro';
+
+The cosmic web takes shape around you. Gas gathers into filaments, dense knots
+grow, and feedback from stars and black holes changes their surroundings.
+I made a 9 minute 45 second film of this history from the IllustrisTNG simulation,
+with a fixed viewpoint and a full sphere of sky to explore. Figure 1 shows one
+view from the film.
+
+<Figure
+  src="/figures/inside-the-cosmic-web/cosmic-web.jpg"
+  alt="Blue and cyan gas filaments converge on a bright knot, surrounded by diffuse amber gas and dark voids."
+  caption="Gas structures at 2:25 in the film. Brightness represents gas column density; the scientific colors represent temperature."
+  number={1}
+  imageWidth={1400}
+  imageHeight={788}
+/>
+
+<FilmWatchLink />
+
+The player opens separately. On a computer or phone, press **Play film** and
+drag to look around. On a headset, open the same link in its browser and choose
+**Enter 360°** when available. You can turn your head in any direction; moving
+sideways does not change the perspective. The film is monoscopic, with no
+positional parallax.
+
+Music starts with the film. Brian’s optional AI narration is off by default;
+**Sound & text** lets you add the voice, adjust the music, or hide the labels.
+Playback follows the authored pace. The 4K and 8K options contain the same film;
+4K is easier to decode, but both use roughly 0.8 GB for a complete viewing.
+A reliable broadband connection helps. If streaming does not work in your
+browser, **Color, scale & source → Try MP4 playback** uses the original movie.
+
+## A History From One Place
+
+The film covers cosmic ages from about 49 million to 13.8 billion years,
+using all 4,380 native outputs of TNG100-2 Subbox 0. The region is 11.1 comoving
+megaparsecs across, or about 36 million light-years at today’s scale. The camera
+stays at its center in comoving coordinates, which follow the overall expansion
+of the universe.
+
+Each second spans about 23.5 million years. Between saved outputs, gas positions
+are interpolated using persistent cell IDs and recorded velocities; cells that
+appear or disappear fade locally. This is a simultaneous view of a simulated
+volume, rather than a telescope observation that mixes different light-travel
+times along a line of sight.
+
+## Reading the Film
+
+Brightness represents the amount of gas integrated along each viewing direction.
+Color represents its column-density-weighted temperature: blue toward the cool
+end, through cyan to amber and red at higher temperatures. Dense cores also
+become pale. These are scientific false colors, with fixed logarithmic keys
+in the player, rather than visible-light emission. Temperatures are approximate,
+particularly for the model’s star-forming gas.
+
+Sparse annotations locate three measured stellar-wind regions, two black holes
+with recorded thermal feedback, and two catalogued galaxies. Later, a distance
+annotation gives the three-dimensional separation of two measured centers.
+The simulation models collective supernova-driven winds; it does not resolve
+individual supernova explosions. A pointer identifies a measured source region,
+not the boundary or unique cause of every visible puff.
+
+The age clock and era titles supply broad cosmological context. Those chapter
+boundaries are approximate, not detections of the first stars or galaxies in
+this particular volume. The player includes the
+[complete text, timings, measurement notes, and simulation credits](https://cosmic-web-film.cosmology-lab-ac48dc.workers.dev/film-text.html).
+
+## Credits and Sources
+
+The simulation is the work of the **IllustrisTNG Collaboration**. This film
+uses the TNG100-2 run, with data described in
+[Nelson et al. (2019), *The IllustrisTNG Simulations: Public Data Release*](https://doi.org/10.1186/s40668-019-0028-x).
+The model and numerical methods are described in
+[Pillepich et al. (2018), *Simulating Galaxy Formation With the IllustrisTNG Model*](https://doi.org/10.1093/mnras/stx3112)
+and the [IllustrisTNG model overview](https://www.tng-project.org/data/docs/background/).
+
+I prepared the visualization and film. The meditative score was generated with
+Eleven Music; the optional Brian voice was generated with ElevenLabs.
+The soundtrack is an artistic accompaniment, not measured cosmic sound.

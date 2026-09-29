@@ -5,13 +5,15 @@ interface Props {
   caption?: string;
   number?: number;
   width?: string;
+  imageWidth?: number;
+  imageHeight?: number;
 }
 
-const { src, alt, caption, number, width = '100%' } = Astro.props;
+const { src, alt, caption, number, width = '100%', imageWidth, imageHeight } = Astro.props;
 ---
 
 <figure>
-  <img src={src} alt={alt} style={`max-width: ${width};`} />
+  <img src={src} alt={alt} width={imageWidth} height={imageHeight} style={`max-width: ${width}; height: auto;`} />
   {caption && (
     <figcaption>
       {number && <strong>Figure {number}.</strong>} {caption}

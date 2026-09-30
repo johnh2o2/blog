@@ -2,7 +2,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
-const diagramMap: Record<string, string> = {
+const imageMap: Record<string, string> = {
+  'cosmic-web-film': '/figures/inside-the-cosmic-web/cosmic-web.jpg',
   'cuvarbase': '/diagrams/cuvarbase.svg',
   'fast-template-periodogram': '/diagrams/fast-template-periodogram.svg',
   'sam-audio-bench': '/diagrams/sam-audio-bench.svg',
@@ -22,12 +23,12 @@ const allProjects = (await getCollection('projects'))
       {allProjects.map(project => (
         <li>
           <a href={project.data.github || project.data.link} target="_blank" rel="noopener noreferrer" class="project-card">
-            {diagramMap[project.slug] && (
-              <div class="card-diagram">
-                <img src={diagramMap[project.slug]} alt="" />
+            <h2>{project.data.title}</h2>
+            {imageMap[project.slug] && (
+              <div class:list={['card-diagram', { 'film-still': project.slug === 'cosmic-web-film' }]}>
+                <img src={imageMap[project.slug]} alt="" />
               </div>
             )}
-            <h2>{project.data.title}</h2>
             <p class="description">{project.data.description}</p>
             <div class="meta">
               <time datetime={project.data.date.toISOString()}>
@@ -82,6 +83,7 @@ const allProjects = (await getCollection('projects'))
   }
 
   .card-diagram img {
+    display: block;
     width: 100%;
     height: auto;
     margin: 0;
@@ -91,13 +93,18 @@ const allProjects = (await getCollection('projects'))
     background: var(--color-background);
   }
 
+  .film-still img {
+    padding: 0;
+    aspect-ratio: 1400 / 788;
+  }
+
   .project-card:hover h2 {
     text-decoration: underline;
     text-underline-offset: 3px;
   }
 
   .project-list h2 {
-    margin: 0 0 var(--space-xs);
+    margin: 0 0 var(--space-sm);
     transition: color 0.2s ease;
   }
 

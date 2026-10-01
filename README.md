@@ -130,6 +130,22 @@ npm run build
 
 Deploy the `dist/` folder to any static hosting service (Netlify, Vercel, GitHub Pages, etc.)
 
+## Search indexing
+
+The production URL is configured in `astro.config.mjs`. Every build generates
+`sitemap-index.xml` and `sitemap-0.xml` from the published routes, including blog
+posts. Draft posts are excluded by the posts route. `robots.txt` allows crawling
+and advertises the sitemap index.
+
+All pages declare a canonical URL on `https://johnhoffman.io`. On Vercel,
+`vercel.json` permanently redirects the `www` host to that domain and removes
+trailing slashes from page URLs. Keep these URLs consistent if changing domains.
+
+After deployment, submit `https://johnhoffman.io/sitemap-index.xml` in Google
+Search Console's Sitemaps report. Use URL Inspection to request indexing of the
+homepage and important new posts, and monitor their indexing status. A successful
+request queues a crawl; it does not guarantee indexing or a search ranking.
+
 ## License
 
 MIT

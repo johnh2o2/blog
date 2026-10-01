@@ -1,0 +1,12 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.johnhoffman.io" }],
+      "destination": "https://johnhoffman.io/:path*",
+      "permanent": true
+    }
+  ]
+}

@@ -6,9 +6,13 @@ interface Props {
   description?: string;
   canonical?: string;
   image?: string;
+  type?: 'website' | 'article';
 }
 
-const { title, description = "John Hoffman — Staff Data Scientist at FAIR (Meta), PhD Astrophysics from Princeton. AI research, statistical modeling, and high-performance computing.", canonical, image } = Astro.props;
+const { title, description = "John Hoffman — Staff Data Scientist at FAIR (Meta), PhD Astrophysics from Princeton. AI research, statistical modeling, and high-performance computing.", canonical, image, type = 'website' } = Astro.props;
+const pageTitle = title.includes('John Hoffman') ? title : `${title} — John Hoffman`;
+const pathname = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const canonicalURL = canonical ?? new URL(pathname, Astro.site).href;
 ---
 
 <!DOCTYPE html>
@@ -17,12 +21,15 @@ const { title, description = "John Hoffman — Staff Data Scientist at FAIR (Met
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content={description}>
-  <title>{title}</title>
-  {canonical && <link rel="canonical" href={canonical} />}
-  {canonical && <meta property="og:url" content={canonical} />}
-  {canonical && <meta property="og:title" content={title} />}
-  {canonical && <meta property="og:description" content={description} />}
-  {canonical && <meta property="og:type" content="article" />}
+  <meta name="author" content="John Hoffman">
+  <title>{pageTitle}</title>
+  <link rel="canonical" href={canonicalURL} />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content={type} />
+  <meta property="og:site_name" content="John Hoffman" />
   {image && <meta property="og:image" content={image} />}
   {image && <meta name="twitter:card" content="summary_large_image" />}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
@@ -33,6 +40,7 @@ const { title, description = "John Hoffman — Staff Data Scientist at FAIR (Met
       <nav>
         <a href="/" class="logo">John Hoffman</a>
         <div class="nav-links">
+          <a href="/posts">Writing</a>
           <a href="/projects">Projects</a>
           <a href="/research">Research</a>
         </div>

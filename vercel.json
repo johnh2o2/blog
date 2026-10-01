@@ -3,6 +3,12 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/",
+      "has": [{ "type": "host", "value": "www.johnhoffman.io" }],
+      "destination": "https://johnhoffman.io/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [{ "type": "host", "value": "www.johnhoffman.io" }],
       "destination": "https://johnhoffman.io/:path*",
